@@ -1,4 +1,3 @@
-import pygame
 import pygame as pg
 from copy import deepcopy
 from math import floor
@@ -65,7 +64,7 @@ class App:
             for event in pg.event.get():
                 if event.type == pg.QUIT:
                     exit()
-                if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.type == pg.MOUSEBUTTONDOWN:
                     x, y = self.get_cords(event.pos)
                     if event.button == 1:
                         self.next_field[y][x] += 1
