@@ -45,10 +45,16 @@ class App:
         self.rules = rules
 
     def check_cell(self, x, y):
+        a, b, c = x - 1, x, x + 1
+        a = self.columns - 1 if a == -1 else a
+        c = 0 if c == self.columns else c
         s = ""
-        s += str(self.current_field[y][x - 1])
-        s += str(self.current_field[y][x])
-        s += str(self.current_field[y][x + 1])
+        try:
+            s += str(self.current_field[y][a])
+            s += str(self.current_field[y][b])
+            s += str(self.current_field[y][c])
+        except:
+            print(a, b, c, self.columns)
         return self.rules[int(s, 2)]
 
     def generate_grid(self, grid_visible):
@@ -74,15 +80,14 @@ class App:
                     self.running = not self.running
 
             # draw life
-            for x in range(1, self.columns - 1):
+            for x in range(self.columns):
                 for y in range(1, self.rows - 1):
                     if self.current_field[y][x]:
                         size = self.tile_size
                         if grid_visible:
                             pg.draw.rect(self.screen, self.color, (x * size + 2, y * size + 2, size - 2, size - 2))
                         else:
-                            pg.draw.rect(self.screen, self.color, (x * size + 2, y * size + 2, size - 2, size - 2),
-                                         border_radius=self.tile_size // 5)
+                            pg.draw.rect(self.screen, self.color, (x * size, y * size, size, size))
 
                     if ((self.time % self.speed) == 0) and self.running and (y == self.depth):
                         if self.depth < self.rows:
@@ -93,7 +98,7 @@ class App:
                     for j in range(1, self.rows - 2):
                         self.next_field[j][i] = self.current_field[j + 1][i]
 
-                for i in range(1, self.columns - 1):
+                for i in range(self.columns):
                     self.next_field[self.rows - 2][i] = self.check_cell(i, self.rows - 2)
 
             self.current_field = deepcopy(self.next_field)
@@ -105,6 +110,7 @@ class App:
             self.clock.tick(self.FPS)
 
 
-app = App(random_field=True, speed=2)
-app.set_rule(110)
+app = App(random_field=True, speed=1, tile_size=5)
+app.set_rule(184)
+# app.current_field[1][app.columns//2] = 1
 app.run(grid_visible=False)
