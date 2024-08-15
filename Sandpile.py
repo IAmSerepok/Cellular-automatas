@@ -5,13 +5,15 @@ from math import floor
 
 class App:
 
-    def __init__(self, screen_width=700, screen_height=700, tile_size=10, fps=60, speed=1):
+    def __init__(self, screen_width=1000, screen_height=700, tile_size=10, fps=60, speed=1):
 
         pg.init()
         self.screen_width = screen_width
         self.screen_height = screen_height
         self.screen = pg.display.set_mode([screen_width, screen_height])
         self.clock = pg.time.Clock()
+
+        self.is_grid = False
 
         self.FPS = fps
         self.speed = speed
@@ -57,7 +59,8 @@ class App:
         while True:
 
             self.screen.fill(pg.Color('black'))
-            self.generate_grid()
+            if self.is_grid:
+                self.generate_grid()
 
             self.next_field = deepcopy(self.current_field)
 
@@ -90,7 +93,8 @@ class App:
                                 self.drop(x, y)
 
                     size = self.tile_size
-                    pg.draw.rect(self.screen, color, (x * size + 2, y * size + 2, size - 2, size - 2))
+                    delta = 2 if self.is_grid else 0
+                    pg.draw.rect(self.screen, color, (x * size + delta, y * size + delta, size - delta, size - delta))
 
             self.current_field = deepcopy(self.next_field)
             pg.display.flip()
@@ -98,6 +102,7 @@ class App:
             self.clock.tick(self.FPS)
 
 
-app = App(speed=3)
-for delta in range(app.columns//2): app.current_field[app.rows//2][app.columns//4 + delta] = 1000
+app = App(speed=1)
+# app.current_field[app.rows // 2][app.columns // 2] = 10 ** 9
+for delta in range(app.columns // 2): app.current_field[app.rows // 2][app.columns // 4 + delta] = 10 ** 6
 app.run(fast=False)
