@@ -69,16 +69,8 @@ class App:
     def get_random_color():
         return randrange(30, 220), randrange(30, 220), randrange(30, 220)
 
-    def generate_grid(self, is_empty):
-        if not is_empty:
-            self.grid = [[randint(0, 1) for col in range(self.columns)] for row in range(self.rows)]
-
-    def run(self, is_empty=True):
-
-        self.generate_grid(is_empty)
-
+    def run(self):
         while True:
-
             if ((self.time % self.speed) == 0) and self.running:
                 for ant in self.ants:
                     ant.run()
