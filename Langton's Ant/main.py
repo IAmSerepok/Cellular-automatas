@@ -87,4 +87,4 @@ class App:
 
 
 app = App(number_of_ants=1, cell_size=5, speed=1, rule='LRRRRRLLR')
-app.run(is_empty=True)
+app.run()
