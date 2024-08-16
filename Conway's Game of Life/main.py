@@ -1,12 +1,12 @@
 import pygame as pg
-from random import randint, randrange
+from random import randint, randrange, random
 from copy import deepcopy
 from math import floor
 
 
 class App:
 
-    def __init__(self, screen_width=1400, screen_height=700, tile_size=20, fps=60, random_field=False):
+    def __init__(self, screen_width=1000, screen_height=700, tile_size=5, fps=60, random_field=False, probability=0.5):
 
         pg.init()
         self.screen_width = screen_width
@@ -18,13 +18,9 @@ class App:
         self.metric = ''
 
         self.FPS = fps
-        self.speed = 10
+        self.speed = 2
         self.time = 0
         self.running = True
-
-        self.offset = 1
-        self.delta_x = 0
-        self.delta_y = 0
 
         self.color = self.get_random_color()
         self.tile_size = tile_size
@@ -32,7 +28,8 @@ class App:
 
         self.next_field = [[0 for i in range(self.columns)] for j in range(self.rows)]
         if random_field:
-            self.current_field = [[randint(0, 1) for i in range(self.columns)] for j in range(self.rows)]
+            self.current_field = [[1 if random() < probability else 0
+                                   for i in range(self.columns)] for j in range(self.rows)]
         else:
             self.current_field = [[0 for i in range(self.columns)] for j in range(self.rows)]
 
@@ -58,22 +55,10 @@ class App:
             return 0
 
     def control(self, keys):
-        if keys[pg.K_w]:
-            self.delta_y += 10
-        if keys[pg.K_s]:
-            self.delta_y -= 10
-        if keys[pg.K_a]:
-            self.delta_x += 10
-        if keys[pg.K_d]:
-            self.delta_x -= 10
         if keys[pg.K_LEFT]:
             self.speed = min(self.speed + 1, 40)
         if keys[pg.K_RIGHT]:
-            self.speed = max(self.speed - 1, 4)
-        if keys[pg.K_UP]:
-            self.offset = min(self.offset + 0.05, 3.5)
-        if keys[pg.K_DOWN]:
-            self.offset = max(self.offset - 0.05, 0.2)
+            self.speed = max(self.speed - 1, 2)
 
     def check_cell_von_neumann(self, current_field_, x, y):
         count = 0
@@ -109,22 +94,21 @@ class App:
 
     def get_cords(self, pos):
         x, y = pos
-        x = floor((x - self.delta_x)/self.screen_width*self.columns)
-        y = floor((y - self.delta_y)/self.screen_height*self.rows)
+        x = floor(x / self.screen_width * self.columns)
+        y = floor(y / self.screen_height * self.rows)
         return x, y
 
     def draw_life(self, grid_visible):
         for x in range(1, self.columns - 1):
             for y in range(1, self.rows - 1):
                 if self.current_field[y][x]:
-                    size = self.tile_size * self.offset
+                    size = self.tile_size
                     if grid_visible:
-                        pg.draw.rect(self.screen, self.color, (x * size + 2 + self.delta_x,
-                                                               y * size + 2 + self.delta_y, size - 2, size - 2))
+                        pg.draw.rect(self.screen, self.color, (x * size + 2,
+                                                               y * size + 2, size - 2, size - 2))
                     else:
-                        pg.draw.rect(self.screen, self.color, (x * size + 2 + self.delta_x,
-                                                               y * size + 2 + self.delta_y, size - 2, size - 2),
-                                     border_radius=self.tile_size // 5)
+                        pg.draw.rect(self.screen, self.color, (x * size,
+                                                               y * size, size, size))
                 if ((self.time % self.speed) == 0) and self.running:
                     if self.metric == "mur":
                         self.next_field[y][x] = self.check_cell_mur(self.current_field, x, y)
@@ -157,6 +141,6 @@ class App:
             self.clock.tick(self.FPS)
 
 
-app = App(random_field=True)
-app.set_rules([3], [2, 3], 'mur')
+app = App(random_field=True, probability=0.4, tile_size=4)
+app.set_rules([3], [4, 5, 6, 7, 8], 'mur')
 app.run(grid_visible=False)
