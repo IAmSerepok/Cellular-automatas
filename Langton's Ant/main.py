@@ -18,7 +18,7 @@ class Ant:
         self.app.grid[self.y][self.x] = not value
 
         size = self.app.cell_size
-        rect = self.x * size, self.y * size, size - 1, size - 1
+        rect = self.x * size, self.y * size, size, size
         
         if value:
             pg.draw.rect(self.app.screen, pg.Color('white'), rect)
@@ -33,7 +33,7 @@ class Ant:
 
 class App:
     
-    def __init__(self, screen_width=1200, screen_height=800, cell_size=10, number_of_ants=1, speed=1):
+    def __init__(self, screen_width=1000, screen_height=700, cell_size=10, number_of_ants=1, speed=1):
         
         pg.init()
         self.screen = pg.display.set_mode([screen_width, screen_height])
@@ -54,27 +54,13 @@ class App:
     def get_random_color():
         return randrange(30, 220), randrange(30, 220), randrange(30, 220)
 
-    def grid_draw(self):
-
-        for row in range(self.rows):
-            for column in range(self.columns):
-
-                rect = column * self.cell_size, row * self.cell_size, self.cell_size - 1, self.cell_size - 1
-
-                if self.grid[row][column]:
-                    pg.draw.rect(self.screen, 'white', rect)
-                else:
-                    pg.draw.rect(self.screen, (150, 150, 150), rect)
-
-    def generate_grid(self, is_empty, is_visible):
+    def generate_grid(self, is_empty):
         if not is_empty:
             self.grid = [[randint(0, 1) for col in range(self.columns)] for row in range(self.rows)]
-        if is_visible:
-            self.grid_draw()
 
-    def run(self, is_empty=True, is_visible=False):
+    def run(self, is_empty=True):
 
-        self.generate_grid(is_empty, is_visible)
+        self.generate_grid(is_empty)
         
         while True:
 
@@ -93,5 +79,5 @@ class App:
             self.clock.tick()
 
 
-app = App(number_of_ants=3)
-app.run(is_empty=True, is_visible=False)
+app = App(number_of_ants=80, cell_size=10, speed=1)
+app.run(is_empty=True)
