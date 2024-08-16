@@ -1,2 +1,2 @@
 # Cellular-automatas
-My Cellular automatas with python
+My cellular automata made with Python
