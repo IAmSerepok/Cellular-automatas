@@ -5,12 +5,10 @@ from math import floor
 
 
 class App:
-
     def __init__(self, screen_width=1400, screen_height=700, tile_size=35, fps=60, speed=15):
-
         pg.init()
-        self.screen_width = screen_width
-        self.screen_height = screen_height
+
+        self.screen_width, self.screen_height = screen_width, screen_height
         self.screen = pg.display.set_mode([screen_width, screen_height])
         self.clock = pg.time.Clock()
 
@@ -49,9 +47,7 @@ class App:
                 self.next_field[y][x] = 2
 
     def run(self):
-
         while True:
-
             self.screen.fill(pg.Color('black'))
             self.generate_grid()
 
@@ -92,5 +88,6 @@ class App:
             self.clock.tick(self.FPS)
 
 
-app = App()
-app.run()
+if __name__ == "__main__":
+    app = App()
+    app.run()

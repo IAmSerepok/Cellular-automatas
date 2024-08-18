@@ -4,7 +4,6 @@ from copy import deepcopy
 
 
 class App:
-
     def __init__(self, screen_width=1400, screen_height=700, tile_size=10, fps=60, speed=1, random_field=False):
 
         pg.init()
@@ -12,7 +11,7 @@ class App:
         self.screen_height = screen_height
         self.screen = pg.display.set_mode([screen_width, screen_height])
         self.clock = pg.time.Clock()
-        self.rules = dict()
+        self.rules = {}
 
         self.FPS = fps
 
@@ -46,15 +45,15 @@ class App:
 
     def check_cell(self, x, y):
         a, b, c = x - 1, x, x + 1
+
         a = self.columns - 1 if a == -1 else a
         c = 0 if c == self.columns else c
+
         s = ""
-        try:
-            s += str(self.current_field[y][a])
-            s += str(self.current_field[y][b])
-            s += str(self.current_field[y][c])
-        except:
-            print(a, b, c, self.columns)
+        s += str(self.current_field[y][a])
+        s += str(self.current_field[y][b])
+        s += str(self.current_field[y][c])
+
         return self.rules[int(s, 2)]
 
     def generate_grid(self, grid_visible):
@@ -65,9 +64,7 @@ class App:
              range(0, self.screen_height, self.tile_size)]
 
     def run(self, grid_visible):
-
         while True:
-
             self.screen.fill(pg.Color('black'))
             self.generate_grid(grid_visible)
 
@@ -110,7 +107,8 @@ class App:
             self.clock.tick(self.FPS)
 
 
-app = App(random_field=True, speed=1, tile_size=5)
-app.set_rule(184)
-# app.current_field[1][app.columns//2] = 1
-app.run(grid_visible=False)
+if __name__ == "__main__":
+    app = App(random_field=True, speed=1, tile_size=5)
+    app.set_rule(184)
+    # app.current_field[1][app.columns//2] = 1
+    app.run(grid_visible=False)

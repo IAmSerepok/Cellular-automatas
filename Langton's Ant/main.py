@@ -1,12 +1,10 @@
 import pygame as pg
 from collections import deque
-from random import randrange, randint
+from random import randrange
 
 
 class Ant:
-
     def __init__(self, app_, position):
-
         self.app = app_
         self.x, self.y = position
         self.step = deque([(1, 0), (0, 1), (-1, 0), (0, -1)])
@@ -86,5 +84,6 @@ class App:
             self.clock.tick()
 
 
-app = App(number_of_ants=1, cell_size=5, speed=1, rule='LRRRRRLLR')
-app.run()
+if __name__ == "__main__":
+    app = App(number_of_ants=1, cell_size=5, speed=1, rule='LRRRRRLLR')
+    app.run()
