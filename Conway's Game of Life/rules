@@ -1,6 +1,6 @@
 Format:
 name
-[birth], [death], metric_name
+[birth], [survival]
 description
 ---------------------------------------------------------------------------------------------------
 The game of life
