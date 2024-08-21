@@ -16,7 +16,7 @@ Globe
 for i in range(80):
     for j in range(80):
         if random() < 0.4:
-            app.current_field[app.rows//2-40+i][app.columns//2-40+j] = 1
+            app.current_field[app.columns//2-40+j, app.rows//2-40+i] = 1
 ---------------------------------------------------------------------------------------------------
 Outrage
 7, 9, False, (14, 15), (43, 49)

@@ -8,7 +8,7 @@ Lines
 for i in range(40):
     for j in range(40):
         if random() < 0.05:
-            app.current_field[app.rows//2-20+i][app.columns//2-20+j] = 1
+            app.current_field[app.columns//2-20+j, app.rows//2-20+i] = 1
 ---------------------------------------------------------------------------------------------------
 Trails
 '2n3aikq', '2cekan3cekinyqjr4i'
@@ -31,5 +31,5 @@ Sponge
 for i in range(80):
     for j in range(80):
         if random() < 0.5:
-            app.current_field[app.rows // 2 - 40 + i][app.columns // 2 - 40 + j] = 1
+            app.current_field[app.columns // 2 - 40 + j, app.rows // 2 - 40 + i] = 1
 ---------------------------------------------------------------------------------------------------

@@ -7,7 +7,7 @@ Transers
 [2, 6], [0, 3, 4, 5], 6
 for i in range(2):
     for j in range(2):
-        app.current_field[app.rows//2+i][app.columns//2+j] = 1
+        app.current_field[app.columns//2+j, app.rows//2+i] = 1
 ---------------------------------------------------------------------------------------------------
 Faders
 [2], [2], 25

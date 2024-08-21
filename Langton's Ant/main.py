@@ -1,4 +1,6 @@
 import pygame as pg
+import numpy as np
+
 from collections import deque
 from random import randrange
 
@@ -10,8 +12,8 @@ class Ant:
         self.step = deque([(1, 0), (0, 1), (-1, 0), (0, -1)])
 
     def run(self):
-        value = self.app.grid[self.y][self.x]
-        self.app.grid[self.y][self.x] = (value + 1) % self.app.conditions
+        value = self.app.grid[self.x, self.y]
+        self.app.grid[self.x, self.y] = (value + 1) % self.app.conditions
 
         size = self.app.cell_size
         rect = self.x * size, self.y * size, size, size
@@ -44,7 +46,7 @@ class App:
 
         self.cell_size = cell_size
         self.rows, self.columns = screen_height // cell_size, screen_width // cell_size
-        self.grid = [[0 for col in range(self.columns)] for row in range(self.rows)]
+        self.grid = np.zeros((self.columns, self.rows), dtype=int)
         self.conditions = len(rule)
         self.colors = [(230, 230, 230)] + [self.get_random_color() for _ in range(self.conditions - 1)]
 

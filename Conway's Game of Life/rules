@@ -9,7 +9,7 @@ Random field, probability=0.5
 ---------------------------------------------------------------------------------------------------
 Fractal
 [1], [0, 1, 2, 3, 4, 5, 6, 7, 8]
-app.current_field[app.rows//2+1][app.columns//2+1] = 1
+app.current_field[app.columns//2+1, app.rows//2+1] = 1
 ---------------------------------------------------------------------------------------------------
 Caves generator
 [5, 6, 7, 8], [4, 5, 6, 7, 8]
@@ -21,7 +21,7 @@ Random field, probability=0.5
 ---------------------------------------------------------------------------------------------------
 Life without Death
 [3], [0, 1, 2, 3, 4, 5, 6, 7, 8]
-for delta in range(app.columns//2): app.current_field[app.rows//2][app.columns//4 + delta] = 1
+for delta in range(app.columns//2): app.current_field[app.columns//4 + delta, app.rows//2] = 1
 ---------------------------------------------------------------------------------------------------
 HighLife
 [3, 6], [2, 3]
@@ -29,15 +29,15 @@ Random field, probability=0.5
 ---------------------------------------------------------------------------------------------------
 Nuclear
 [1], []
-app.current_field[app.rows//2+1][app.columns//2+1] = 1
-for delta in range(app.columns//2): app.current_field[app.rows//2][app.columns//4 + delta] = 1
+app.current_field[app.columns//2+1, app.rows//2+1] = 1
+for delta in range(app.columns//2): app.current_field[app.columns//4 + delta, app.rows//2] = 1
 ---------------------------------------------------------------------------------------------------
 Maze generator
 [3], [1, 2, 3, 4, 5]
 for i in range(10):
     for j in range(10):
         if random() < 0.4:
-            app.current_field[app.rows//2-5+i][app.columns//2-5+j] = 1
+            app.current_field[app.columns//2-5+j, app.rows//2-5+i] = 1
 ---------------------------------------------------------------------------------------------------
 Amoebas
 [3, 5, 6, 7, 8], [5, 6, 7, 8]
@@ -48,7 +48,7 @@ Rhombus
 for i in range(50):
     for j in range(50):
         if random() < 0.4:
-            app.current_field[app.rows//2-25+i][app.columns//2-25+j] = 1
+            app.current_field[app.columns//2-25+j, app.rows//2-25+i] = 1
 ---------------------------------------------------------------------------------------------------
 Fire
 [4, 6, 7, 8], [3, 5, 6, 7, 8]
