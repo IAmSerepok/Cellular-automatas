@@ -6,7 +6,7 @@ from copy import deepcopy
 from colorsys import hsv_to_rgb
 from numba import prange
 
-from Misc.neighborhood import neighborhood_funcs
+from general.neighborhood import neighborhood_funcs
 
 
 class App:
